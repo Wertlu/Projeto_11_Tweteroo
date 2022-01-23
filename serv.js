@@ -9,3 +9,5 @@ serv.post('/sign-up', (req, res) => {
     users.push(req.body);
     res.send("OK");
 })
+
+serv.listen(5000);
