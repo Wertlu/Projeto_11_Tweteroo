@@ -12,7 +12,7 @@ serv.get("/", (req, res) => {
 const users = [];
 
 serv.post("/sign-up", (req, res) => {
-    if ((req.body.username && req.body.username !== "") || (req.body.avatar && req.body.avatar !== "")) {
+    if ((req.body.username && req.body.username !== "") && (req.body.avatar && req.body.avatar !== "")) {
         users.push(req.body);
         res.send("OK");
     } else {
@@ -23,7 +23,7 @@ serv.post("/sign-up", (req, res) => {
 const tweets = [];
 
 serv.post("/tweets", (req, res) => {
-    if ((req.body.username && req.body.username !== "") || (req.body.tweet && req.body.tweet !== "")) {
+    if ((req.body.username && req.body.username !== "") && (req.body.tweet && req.body.tweet !== "")) {
         const tweet = {
             username: req.body.username,
             avatar: users.find(user => user.username === req.body.username).avatar,
