@@ -14,6 +14,7 @@ const users = [];
 serv.post("/sign-up", (req, res) => {
     if ((req.body.username && req.body.username !== "") && (req.body.avatar && req.body.avatar !== "")) {
         users.push(req.body);
+        console.log("teste post sign-up");
         res.send("OK");
     } else {
         res.status(400).send("Todos os campos são obrigatórios!");
@@ -30,8 +31,9 @@ serv.post("/tweets", (req, res) => {
             tweet: req.body.tweet
         };
         tweets.push(tweet);
+        console.log("teste post tweets");
         res.send("OK");
-    }else{
+    } else {
         res.status(400).send("Todos os campos são obrigatórios!");
     }
 });
@@ -40,13 +42,13 @@ serv.get("/tweets", (req, res) => {
 
     const latestsTweets = [];
 
-    if (tweets.length >= 10) {
-        for (let i = 0; i <= 10; i++) {
-            latestsTweets.push(tweets);
+    if (tweets.length < 10){
+        for(let i = 0; i < tweets.length; i++){
+            latestsTweets.push(tweets[(tweets.length - 1) - i]);
         }
-    } else {
-        for (let i = 0; i <= tweets.length; i++) {
-            latestsTweets.push(tweets);
+    }else{
+        for(let i = 0; i < 10; i++){
+            latestsTweets.push(tweets[(tweets.length - 1) - i]);
         }
     }
 
