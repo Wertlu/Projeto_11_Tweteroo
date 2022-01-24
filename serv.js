@@ -12,27 +12,41 @@ serv.get("/", (req, res) => {
 const users = [];
 
 serv.post("/sign-up", (req, res) => {
-    users.push(req.body);
-    res.send("OK");
+    if ((req.body.username && req.body.username !== "") || (req.body.avatar && req.body.avatar !== "")) {
+        users.push(req.body);
+        res.send("OK");
+    } else {
+        res.status(400).send("Todos os campos são obrigatórios!");
+    }
 });
 
 const tweets = [];
 
 serv.post("/tweets", (req, res) => {
-    tweets.push(req.body);
-    res.send("OK");
+    if ((req.body.username && req.body.username !== "") || (req.body.tweet && req.body.tweet !== "")) {
+        const tweet = {
+            username: req.body.username,
+            avatar: users.find(user => user.username === req.body.username).avatar,
+            tweet: req.body.tweet
+        };
+        tweets.push(tweet);
+        res.send("OK");
+    }else{
+        res.status(400).send("Todos os campos são obrigatórios!");
+    }
 });
 
 serv.get("/tweets", (req, res) => {
+
     const latestsTweets = [];
 
     if (tweets.length >= 10) {
         for (let i = 0; i <= 10; i++) {
-            latestsTweets.push(tweets[(tweets.length - 1) - i]);
+            latestsTweets.push(tweets);
         }
-    }else{
-        for (let i = 0; i <= tweets.length; i++){
-            latestsTweets.push(tweets[(tweets.length - 1) - i]);
+    } else {
+        for (let i = 0; i <= tweets.length; i++) {
+            latestsTweets.push(tweets);
         }
     }
 
